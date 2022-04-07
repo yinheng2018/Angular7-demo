@@ -1,0 +1,9 @@
+<div class="app-root root">
+    <div class="ul">
+        <div class="li"  [class.active]="isList"  routerLink= '/list' (click)="tabs('List')">List</div>
+        <div class="li"  [class.active]="isTree"  routerLink= '/tree' (click)="tabs('Tree')">Tree</div>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

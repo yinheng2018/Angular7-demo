@@ -1,0 +1,4 @@
+{
+    "easysass.compileAfterSave": true,
+    "tslint.suppressWhileTypeErrorsPresent": true
+}
