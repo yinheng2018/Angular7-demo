@@ -1,4 +1,8 @@
-<div class="content_children"> div works! <div class="header_ul">
+div works! <button (click)="reset()"> 重置 </button>
+<br>
+<br>
+<div class="content_children">
+  <div class="header_ul">
     <div class="header_ul_div">岗位编号</div>
     <div class="header_ul_div">岗位编码</div>
     <div class="header_ul_div">岗位名称</div>
@@ -8,7 +12,7 @@
     <div class="header_ul_div">操作</div>
   </div>
   <div class="body_ul">
-    <div class="body_ul_div"  [class.active]="item.checked"  *ngFor="let item of list;let i=index" (click)="clickCheced(i)">
+    <div class="body_ul_div" [class.active]="item.checked" *ngFor="let item of list;let i=index" (click)="clickCheced(i)">
       <div class="div_div">{{item.gwnum}}</div>
       <div class="div_div">{{item.gwnum2}}</div>
       <div class="div_div">{{item.gwname}}</div>
@@ -16,7 +20,7 @@
       <div class="div_div">{{item.status==1?'异常':'正常'}}</div>
       <div class="div_div time">{{item.time}}</div>
       <div class="div_div">
-        <span class="edit">编辑</span><span class="delete">删除</span>
+        <span class="edit" (click)="edit()">编辑</span><span class="delete" (click)="delete(i)">删除</span>
       </div>
     </div>
   </div>

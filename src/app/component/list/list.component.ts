@@ -8,53 +8,7 @@ import { EventManager } from '@angular/platform-browser'
 })
 export class ListComponent implements OnInit {
 
-  public list = [
-    {
-      "checked": false,
-      "gwnum": 1, //岗位编号
-      "gwnum2": 'ceo', //岗位编码
-      "gwname": '董事长', //岗位名称
-      "code": '1', //显示序列
-      "status": 0,//0正常1异常 
-      "time": '2021-12-17 18:31:08',//创建时间
-    },
-    {
-      "checked": false,
-      "gwnum": 2, //岗位编号
-      "gwnum2": 'ceo', //岗位编码
-      "gwname": '董事长', //岗位名称
-      "code": '2', //显示序列
-      "status": 0,//0正常1异常 
-      "time": '2021-12-17 18:31:08',//创建时间
-    },
-    {
-      "checked": false,
-      "gwnum": 3, //岗位编号
-      "gwnum2": 'ceo', //岗位编码
-      "gwname": '董事长', //岗位名称
-      "code": '3', //显示序列
-      "status": 1,//0正常1异常 
-      "time": '2021-12-17 18:31:08',//创建时间
-    },
-    {
-      "checked": false,
-      "gwnum": 4, //岗位编号
-      "gwnum2": 'ceo', //岗位编码
-      "gwname": '董事长', //岗位名称
-      "code": '4', //显示序列
-      "status": 0,//0正常1异常 
-      "time": '2021-12-17 18:31:08',//创建时间
-    },
-    {
-      "checked": false,
-      "gwnum": 5, //岗位编号
-      "gwnum2": 'ceo', //岗位编码
-      "gwname": '董事长', //岗位名称
-      "code": '5', //显示序列
-      "status": 0,//0正常1异常 
-      "time": '2021-12-17 18:31:08',//创建时间
-    },
-  ]
+  public list = []
   public ctrlStatus = false
   public cStatus = false
   public vStatus = false
@@ -62,10 +16,82 @@ export class ListComponent implements OnInit {
   constructor(
     private eventManager: EventManager
   ) { }
+  ListJson() {
+    let list = JSON.parse(localStorage.getItem("List")) ? JSON.parse(localStorage.getItem("List")) : [
+      {
+        "checked": false,
+        "gwnum": 1, //岗位编号
+        "gwnum2": 'ceo1', //岗位编码
+        "gwname": '董事长1', //岗位名称
+        "code": '1', //显示序列
+        "status": 0,//0正常1异常 
+        "time": '2021-12-11 18:31:08',//创建时间
+      },
+      {
+        "checked": false,
+        "gwnum": 2, //岗位编号
+        "gwnum2": 'ceo2', //岗位编码
+        "gwname": '董事长2', //岗位名称
+        "code": '2', //显示序列
+        "status": 0,//0正常1异常 
+        "time": '2021-12-12 18:31:08',//创建时间
+      },
+      {
+        "checked": false,
+        "gwnum": 3, //岗位编号
+        "gwnum2": 'ceo3', //岗位编码
+        "gwname": '董事长3', //岗位名称
+        "code": '3', //显示序列
+        "status": 1,//0正常1异常 
+        "time": '2021-12-13 18:31:08',//创建时间
+      },
+      {
+        "checked": false,
+        "gwnum": 4, //岗位编号
+        "gwnum2": 'ceo4', //岗位编码
+        "gwname": '董事长4', //岗位名称
+        "code": '4', //显示序列
+        "status": 0,//0正常1异常 
+        "time": '2021-12-14 18:31:08',//创建时间
+      },
+      {
+        "checked": false,
+        "gwnum": 5, //岗位编号
+        "gwnum2": 'ceo5', //岗位编码
+        "gwname": '董事长5', //岗位名称
+        "code": '5', //显示序列
+        "status": 0,//0正常1异常 
+        "time": '2021-12-15 18:31:08',//创建时间
+      },
+    ]
+    return list
+  }
+  reset() {
+    localStorage.removeItem("List")
+    this.list = this.ListJson()
+  }
   deepCopy(obj) {
     var a = JSON.stringify(obj)
     var newobj = JSON.parse(a)
     return newobj
+  }
+  delete(i) {
+    let List = this.deepCopy(this.list),Arry = []
+
+    List.map((item,key) => {
+      if (key != i) {
+        Arry.push(List[key])
+      }
+
+    })
+    Arry.map((item,key) => {
+      item.code = key + 1
+      // item.gwnum = key + 1
+
+    })
+    this.list = Arry
+    localStorage.setItem("List",JSON.stringify(Arry))
+
   }
   clickCheced(i) {
     let List = this.deepCopy(this.list)
@@ -84,7 +110,11 @@ export class ListComponent implements OnInit {
     console.log(111,i,this.clickList,List,this.list)
 
   }
+  edit() { 
+    alert("暂时不支持编辑")
+  }
   ngOnInit() {
+    this.list = this.ListJson()
     this.eventManager.addGlobalEventListener('window','keyup',(e) => {
       console.log(e.keyCode + "keyup")
       if (e.keyCode == 17) {
@@ -123,9 +153,10 @@ export class ListComponent implements OnInit {
         List.map((item,key) => {
           item.checked = false
           item.code = key + 1
-          item.gwnum = key + 1
+          // item.gwnum = key + 1
         })
         this.list = List
+        localStorage.setItem("List",JSON.stringify(List))
         this.clickList = []
       }
 
